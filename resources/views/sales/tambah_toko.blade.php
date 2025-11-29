@@ -13,7 +13,12 @@
     </div>
 
     <!-- Form -->
-    <form id="formTambahToko" action="{{ route('sales.store') }}" enctype="multipart/form-data" class="animate-fade-in w-full">
+    <form id="formTambahToko"
+      action="{{ route('sales.store') }}"
+      method="POST"
+      enctype="multipart/form-data"
+      class="animate-fade-in w-full">
+
         @csrf
 
         <!-- Row 1 -->

@@ -59,6 +59,11 @@ Route::middleware(['auth', 'role:admin'])
 | Sales Routes
 |--------------------------------------------------------------------------
 */
+/*
+|--------------------------------------------------------------------------
+| Sales Routes
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth', 'role:sales'])
     ->prefix('sales')
     ->name('sales.')
@@ -76,9 +81,13 @@ Route::middleware(['auth', 'role:sales'])
         Route::get('/input-sisa', [SalesSisaController::class, 'create'])->name('sisa.create');
         Route::post('/input-sisa', [SalesSisaController::class, 'store'])->name('sisa.store');
 
-        // CRUD TOKO (Sales hanya mengelola toko mereka)
+        // CRUD TOKO
         Route::get('/daftar-toko', [StoreController::class, 'index'])->name('daftartoko');
-        Route::post('/tambah-toko', [StoreController::class, 'store'])->name('store');
+
+        // 🔥 Perbaikan utama (GET dulu, baru POST)
         Route::get('/tambah-toko', [StoreController::class, 'create'])->name('tambahtoko');
+        Route::post('/tambah-toko', [StoreController::class, 'store'])->name('store');
+
         Route::delete('/toko/{id}', [StoreController::class, 'destroy'])->name('toko.destroy');
     });
+
