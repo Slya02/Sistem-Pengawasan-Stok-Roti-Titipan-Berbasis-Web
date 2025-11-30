@@ -15,28 +15,20 @@ class Store extends Model
         'owner_name',
         'address',
         'join_date',
-        'photo',
         'sales_id',
         'latitude',
         'longitude',
+        'photo',
     ];
 
-    /**
-     * 🚀 Cast otomatis kolom photo agar langsung jadi array saat diakses
-     */
     protected $casts = [
-        'photo' => 'array',
         'join_date' => 'date',
         'latitude' => 'float',
         'longitude' => 'float',
     ];
 
-    /**
-     * 🔗 Relasi ke user sales
-     */
     public function sales()
     {
         return $this->belongsTo(User::class, 'sales_id');
     }
 }
-?>

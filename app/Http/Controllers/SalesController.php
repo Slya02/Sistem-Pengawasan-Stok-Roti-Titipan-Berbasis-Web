@@ -161,7 +161,6 @@ class SalesController extends Controller
         return view('sales.input_stok', compact('stores', 'variants'));
     }
 
-    /** 📝 Simpan Input Stok */
     public function storeStok(Request $request)
     {
         // Ambil varian otomatis dari database
@@ -173,11 +172,10 @@ class SalesController extends Controller
             }
         }
 
-        // Validasi
+        // VALIDASI TANPA FOTO
         $rules = [
             'nama_toko' => 'required|string|max:255',
             'tanggal_pengantaran' => 'required|date',
-            'foto_roti' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ];
 
         foreach ($variants as $v) {
@@ -186,17 +184,11 @@ class SalesController extends Controller
 
         $request->validate($rules);
 
-        // Upload foto
-        $fotoRotiPath = $request->hasFile('foto_roti')
-            ? $request->file('foto_roti')->store('uploads/foto_roti', 'public')
-            : null;
-
-        // Siapkan data simpan
+        // DATA SIMPAN
         $data = [
             'user_id' => Auth::id(),
             'nama_toko' => $request->nama_toko,
-            'tanggal_pengantaran' => Carbon::parse($request->tanggal_pengantaran)->format('Y-m-d'),
-            'foto_roti' => $fotoRotiPath,
+            'tanggal_pengantaran' => $request->tanggal_pengantaran,
         ];
 
         foreach ($variants as $v) {

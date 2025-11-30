@@ -12,8 +12,7 @@
     </div>
 
     <form action="{{ route('sales.sisa.store') }}" 
-          method="POST" 
-          enctype="multipart/form-data" 
+          method="POST"
           class="animate-fade-in space-y-8">
 
         @csrf
@@ -43,24 +42,11 @@
                         <input type="number" 
                                name="{{ $v . '_sisa' }}"
                                class="w-full px-4 py-2 border-2 border-yellow-400 rounded-lg bg-[#fffcee] transition"
-                               placeholder="Jumlah sisa" 
+                               placeholder="Jumlah sisa"
                                required>
                     </div>
                 @endforeach
             </div>
-        </div>
-
-        <!-- FOTO SISA -->
-        <div>
-            <label class="block text-gray-700 font-semibold mb-2">Foto Roti Sisa</label>
-            <label for="foto_sisa" id="uploadSisaArea"
-                class="border-2 border-dashed border-yellow-400 rounded-lg p-8 text-center bg-yellow-50 hover:bg-yellow-100 cursor-pointer transition block">
-                <i class="fa-solid fa-cloud-arrow-up text-yellow-500 text-4xl mb-2 animate-bounce"></i>
-                <p class="text-gray-700 mb-1 font-medium">Klik atau seret foto sisa roti ke sini</p>
-                <p class="text-gray-400 text-sm">Maksimum size: 2 MB</p>
-            </label>
-            <input type="file" name="foto_sisa" id="foto_sisa" class="hidden" accept="image/*">
-            <div id="file-name-sisa" class="text-sm text-gray-600 mt-2"></div>
         </div>
 
         <!-- TANGGAL -->
@@ -88,7 +74,6 @@
     </form>
 </div>
 
-<script src="https://kit.fontawesome.com/a2e0e6adf0.js" crossorigin="anonymous"></script>
 <script src="{{ asset('js/input_sisa.js') }}"></script>
 
 @endsection

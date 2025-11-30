@@ -15,8 +15,8 @@ class StokRoti extends Model
         'user_id',
         'nama_toko',
         'tanggal_pengantaran',
-        'foto_roti',
 
+        // semua varian
         'coklat_masuk',
         'srikaya_masuk',
         'strawberry_masuk',
@@ -28,21 +28,18 @@ class StokRoti extends Model
         'keju_masuk',
     ];
 
-    /** Relasi ke Toko */
     public function store()
     {
         return $this->belongsTo(Store::class, 'nama_toko', 'name');
     }
 
-    /** Relasi ke Sisa Roti */
     public function sisa()
     {
         return $this->hasOne(SisaRoti::class, 'stok_roti_id');
     }
 
     public function user()
-{
-    return $this->belongsTo(\App\Models\User::class, 'user_id');
-}
-
+    {
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
+    }
 }

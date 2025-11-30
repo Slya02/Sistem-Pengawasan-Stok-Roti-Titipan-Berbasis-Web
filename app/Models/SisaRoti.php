@@ -16,7 +16,6 @@ class SisaRoti extends Model
         'stok_roti_id',
         'nama_toko',
         'tanggal_pengambilan',
-        'foto_sisa',
 
         // SISA
         'coklat_sisa',
@@ -49,13 +48,11 @@ class SisaRoti extends Model
         return $this->belongsTo(StokRoti::class);
     }
     
-    /** Relasi ke User / Sales */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /** Relasi ke Store berdasarkan nama */
     public function store()
     {
         return $this->belongsTo(Store::class, 'nama_toko', 'name');

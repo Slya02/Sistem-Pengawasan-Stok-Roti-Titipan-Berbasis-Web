@@ -34,7 +34,6 @@
                     <th class="px-6 py-3 text-left text-xs uppercase font-semibold">Nama Toko</th>
                     <th class="px-6 py-3 text-left text-xs uppercase font-semibold">Alamat</th>
                     <th class="px-6 py-3 text-left text-xs uppercase font-semibold">No HP</th>
-                    <th class="px-6 py-3 text-left text-xs uppercase font-semibold">Foto</th>
                     <th class="px-6 py-3 text-left text-xs uppercase font-semibold">Aksi</th>
                 </tr>
             </thead>
@@ -43,9 +42,6 @@
 
                 @foreach ($stores as $index => $store)
                     @php
-                        $photos = json_decode($store->photo, true) ?? [];
-                        $firstPhoto = $photos[0] ?? null;
-
                         $mapUrl = ($store->latitude && $store->longitude)
                             ? "https://www.google.com/maps/search/?api=1&query={$store->latitude},{$store->longitude}"
                             : null;
@@ -56,15 +52,6 @@
                         <td class="px-6 py-4 font-semibold">{{ $store->name }}</td>
                         <td class="px-6 py-4">{{ $store->address }}</td>
                         <td class="px-6 py-4">{{ $store->phone }}</td>
-
-                        <td class="px-6 py-4">
-                            @if ($firstPhoto)
-                                <img src="{{ asset('storage/'.$firstPhoto) }}"
-                                     class="w-16 h-16 object-cover rounded-md shadow">
-                            @else
-                                -
-                            @endif
-                        </td>
 
                         <td class="px-6 py-4">
                             <div class="flex gap-2 items-center">
@@ -118,27 +105,12 @@
         @foreach ($stores as $store)
 
             @php
-                $photos = json_decode($store->photo, true) ?? [];
-                $firstPhoto = $photos[0] ?? null;
-
                 $mapUrl = ($store->latitude && $store->longitude)
                     ? "https://www.google.com/maps/search/?api=1&query={$store->latitude},{$store->longitude}"
                     : null;
             @endphp
 
             <div class="bg-white rounded-lg shadow p-4">
-
-                {{-- Foto --}}
-                <div class="flex justify-center mb-3">
-                    @if ($firstPhoto)
-                        <img src="{{ asset('storage/'.$firstPhoto) }}"
-                             class="w-24 h-24 rounded-md shadow object-cover">
-                    @else
-                        <div class="w-24 h-24 bg-gray-200 flex items-center justify-center text-gray-500 rounded-md">
-                            No Photo
-                        </div>
-                    @endif
-                </div>
 
                 {{-- Informasi --}}
                 <p><b>Nama:</b> {{ $store->name }}</p>

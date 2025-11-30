@@ -29,7 +29,6 @@
     @endif
 
 
-
     {{-- ============================= --}}
     {{--   DESKTOP - TABLE VIEW        --}}
     {{-- ============================= --}}
@@ -41,18 +40,14 @@
                     <th class="px-6 py-3 text-left text-xs font-semibold uppercase text-gray-700">Nama Toko</th>
                     <th class="px-6 py-3 text-left text-xs font-semibold uppercase text-gray-700">Alamat</th>
                     <th class="px-6 py-3 text-left text-xs font-semibold uppercase text-gray-700">No HP</th>
-                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase text-gray-700">Foto</th>
                     <th class="px-6 py-3 text-center text-xs font-semibold uppercase text-gray-700">Lokasi</th>
                 </tr>
             </thead>
 
             <tbody class="divide-y divide-gray-200">
                 @forelse($stores as $index => $store)
-                    @php
-                        $photos = json_decode($store->photo, true) ?? [];
-                        $firstPhoto = $photos[0] ?? null;
 
-                        // URL Google Maps
+                    @php
                         $mapUrl = ($store->latitude && $store->longitude)
                             ? "https://www.google.com/maps/search/?api=1&query={$store->latitude},{$store->longitude}"
                             : null;
@@ -63,14 +58,6 @@
                         <td class="px-6 py-4 font-semibold">{{ $store->name }}</td>
                         <td class="px-6 py-4">{{ $store->address }}</td>
                         <td class="px-6 py-4">{{ $store->phone }}</td>
-                        <td class="px-6 py-4">
-                            @if($firstPhoto)
-                                <img src="{{ asset('storage/'.$firstPhoto) }}"
-                                     class="w-16 h-16 object-cover rounded-md shadow">
-                            @else
-                                <span class="text-gray-400">-</span>
-                            @endif
-                        </td>
 
                         {{-- Tombol Lokasi --}}
                         <td class="px-6 py-4 text-center">
@@ -84,15 +71,17 @@
                             @endif
                         </td>
                     </tr>
+
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center py-4 text-gray-500">Belum ada data toko.</td>
+                        <td colspan="5" class="text-center py-4 text-gray-500">
+                            Belum ada data toko.
+                        </td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
-
 
 
 
@@ -103,27 +92,12 @@
         @forelse($stores as $store)
 
             @php
-                $photos = json_decode($store->photo, true) ?? [];
-                $firstPhoto = $photos[0] ?? null;
-
                 $mapUrl = ($store->latitude && $store->longitude)
                     ? "https://www.google.com/maps/search/?api=1&query={$store->latitude},{$store->longitude}"
                     : null;
             @endphp
 
             <div class="bg-white shadow rounded-lg p-4">
-
-                {{-- Foto --}}
-                <div class="flex justify-center mb-3">
-                    @if($firstPhoto)
-                        <img src="{{ asset('storage/'.$firstPhoto) }}"
-                             class="w-24 h-24 object-cover rounded-lg shadow">
-                    @else
-                        <div class="w-24 h-24 flex items-center justify-center bg-gray-200 text-gray-500 rounded-lg">
-                            No Photo
-                        </div>
-                    @endif
-                </div>
 
                 {{-- Info --}}
                 <div class="space-y-1 text-sm text-gray-700">

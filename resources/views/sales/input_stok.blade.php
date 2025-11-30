@@ -11,7 +11,7 @@
         <h2 class="text-lg md:text-xl font-semibold tracking-wide">Input Stok Baru</h2>
     </div>
 
-    <form action="{{ route('sales.stok.store') }}" method="POST" enctype="multipart/form-data" class="animate-fade-in space-y-8">
+    <form action="{{ route('sales.stok.store') }}" method="POST" class="animate-fade-in space-y-8">
         @csrf
 
         <!-- PILIH TOKO -->
@@ -27,25 +27,11 @@
             </select>
         </div>
 
-        <!-- INPUT JUMLAH ROTI MASUK PER VARIAN -->
+        <!-- INPUT JUMLAH ROTI MASUK -->
         <div>
             <label class="block text-gray-700 font-semibold mb-2">Jumlah Roti Masuk Per Rasa</label>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                @php
-                    $variants = [
-                        'coklat',
-                        'srikaya',
-                        'strawberry',
-                        'kacang',
-                        'coklat_kacang',
-                        'coklat_strawberry',
-                        'mocca',
-                        'kopi',
-                        'keju'
-                    ];
-                @endphp
-
                 @foreach($variants as $v)
                 <div>
                     <label class="text-gray-700 capitalize">{{ str_replace('_', ' ', $v) }}</label>
@@ -54,21 +40,7 @@
                         placeholder="Jumlah masuk" required>
                 </div>
                 @endforeach
-
             </div>
-        </div>
-
-        <!-- FOTO ROTI -->
-        <div>
-            <label class="block text-gray-700 font-semibold mb-2">Foto Roti Masuk</label>
-            <label for="foto_roti" id="uploadRotiArea"
-                class="border-2 border-dashed border-yellow-400 rounded-lg p-8 text-center bg-yellow-50 hover:bg-yellow-100 cursor-pointer transition block">
-                <i class="fa-solid fa-cloud-arrow-up text-yellow-500 text-4xl mb-2 animate-bounce"></i>
-                <p class="text-gray-700 mb-1 font-medium">Klik atau seret foto roti ke sini</p>
-                <p class="text-gray-400 text-sm">Maksimum size: 2 MB</p>
-            </label>
-            <input type="file" name="foto_roti" id="foto_roti" class="hidden" accept="image/*">
-            <div id="file-name" class="text-sm text-gray-600 mt-2"></div>
         </div>
 
         <!-- TANGGAL -->
@@ -99,7 +71,10 @@
 <script src="{{ asset('js/input_stok.js') }}"></script>
 
 <style>
-@keyframes fade-in { from {opacity:0; transform: translateY(8px);} to {opacity:1; transform: translateY(0);} }
+@keyframes fade-in { 
+    from {opacity:0; transform: translateY(8px);} 
+    to {opacity:1; transform: translateY(0);} 
+}
 .animate-fade-in { animation: fade-in 0.6s ease-out; }
 </style>
 
