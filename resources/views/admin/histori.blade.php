@@ -12,7 +12,7 @@
     */
     function formatVarianListWithTotal($item, $suffix) {
         $data = collect($item->toArray())
-            ->filter(fn($v, $k) => str_ends_with($k, $suffix) && !str_starts_with($k, 'foto_'));
+            ->filter(fn($v, $k) => str_ends_with($k, $suffix));
 
         $list = $data->map(function($v, $k) use ($suffix) {
                 $nama = str_replace($suffix, '', $k);
@@ -29,9 +29,7 @@
 
 <div class="p-4 sm:p-8">
 
-    {{-- ========================= --}}
     {{-- FILTER & SEARCH --}}
-    {{-- ========================= --}}
     <form method="GET" class="mb-6 flex flex-col sm:flex-row gap-4">
 
         <input type="text"
@@ -55,9 +53,7 @@
 
 
 
-    {{-- ========================= --}}
     {{-- HISTORI ROTI MASUK --}}
-    {{-- ========================= --}}
     <h1 class="text-2xl font-bold text-gray-800 mb-4">Histori Roti Masuk</h1>
 
     @if ($historiMasuk->isEmpty())
@@ -68,7 +64,7 @@
 
     @else
 
-        {{-- DESKTOP TABLE --}}
+        {{-- DESKTOP --}}
         <div class="hidden sm:block bg-white shadow rounded-lg overflow-x-auto mb-8">
             <table class="min-w-full border-collapse">
                 <thead class="bg-yellow-300 text-black">
@@ -77,7 +73,6 @@
                         <th class="px-4 py-3 text-left">Nama Sales</th>
                         <th class="px-4 py-3 text-left">Nama Toko</th>
                         <th class="px-4 py-3 text-left">Roti Masuk</th>
-                        <th class="px-4 py-3 text-left">Foto Masuk</th>
                     </tr>
                 </thead>
 
@@ -89,20 +84,8 @@
                             </td>
                             <td class="px-4 py-3">{{ $item->user->name ?? '-' }}</td>
                             <td class="px-4 py-3">{{ $item->nama_toko }}</td>
-
                             <td class="px-4 py-3">
-                                <ul class="list-none">
-                                    {!! formatVarianListWithTotal($item, '_masuk') !!}
-                                </ul>
-                            </td>
-
-                            <td class="px-4 py-3">
-                                @if($item->foto_roti)
-                                    <img src="{{ asset('storage/'.$item->foto_roti) }}"
-                                         class="w-16 h-16 rounded object-cover">
-                                @else
-                                    <span class="text-gray-400">-</span>
-                                @endif
+                                <ul class="list-none">{!! formatVarianListWithTotal($item, '_masuk') !!}</ul>
                             </td>
                         </tr>
                     @endforeach
@@ -110,7 +93,7 @@
             </table>
         </div>
 
-        {{-- MOBILE CARD --}}
+        {{-- MOBILE --}}
         <div class="sm:hidden space-y-4 mb-8">
 
             @foreach ($historiMasuk as $item)
@@ -127,16 +110,6 @@
                     <p class="mt-2 font-semibold">Roti Masuk:</p>
                     <ul>{!! formatVarianListWithTotal($item, '_masuk') !!}</ul>
 
-                    <div class="mt-3">
-                        <b>Foto Masuk:</b><br>
-                        @if($item->foto_roti)
-                            <img src="{{ asset('storage/'.$item->foto_roti) }}"
-                                 class="w-28 h-28 rounded-lg object-cover mt-2 shadow">
-                        @else
-                            <span class="text-gray-400">Tidak ada foto</span>
-                        @endif
-                    </div>
-
                 </div>
 
             @endforeach
@@ -147,9 +120,7 @@
 
 
 
-    {{-- ========================= --}}
     {{-- HISTORI PENJUALAN --}}
-    {{-- ========================= --}}
     <h1 class="text-2xl font-bold text-gray-800 mb-4">Histori Penjualan</h1>
 
     @if ($historiPenjualan->isEmpty())
@@ -160,7 +131,7 @@
 
     @else
 
-        {{-- DESKTOP TABLE --}}
+        {{-- DESKTOP --}}
         <div class="hidden sm:block bg-white shadow rounded-lg overflow-x-auto">
             <table class="min-w-full border-collapse">
                 <thead class="bg-yellow-300">
@@ -171,7 +142,6 @@
                         <th class="px-4 py-3">Sisa</th>
                         <th class="px-4 py-3">Terjual</th>
                         <th class="px-4 py-3">Nominal</th>
-                        <th class="px-4 py-3">Foto Sisa</th>
                     </tr>
                 </thead>
 
@@ -185,27 +155,12 @@
                             <td class="px-4 py-3">{{ $item->user->name ?? '-' }}</td>
                             <td class="px-4 py-3">{{ $item->nama_toko }}</td>
 
-                            <td class="px-4 py-3">
-                                <ul>{!! formatVarianListWithTotal($item, '_sisa') !!}</ul>
-                            </td>
-
-                            <td class="px-4 py-3">
-                                <ul>{!! formatVarianListWithTotal($item, '_terjual') !!}</ul>
-                            </td>
+                            <td class="px-4 py-3"><ul>{!! formatVarianListWithTotal($item, '_sisa') !!}</ul></td>
+                            <td class="px-4 py-3"><ul>{!! formatVarianListWithTotal($item, '_terjual') !!}</ul></td>
 
                             <td class="px-4 py-3 text-green-600 font-bold">
                                 Rp {{ number_format($item->total_bill, 0, ',', '.') }}
                             </td>
-
-                            <td class="px-4 py-3">
-                                @if($item->foto_sisa)
-                                    <img src="{{ asset('storage/'.$item->foto_sisa) }}"
-                                         class="w-16 h-16 rounded object-cover">
-                                @else
-                                    <span class="text-gray-400">-</span>
-                                @endif
-                            </td>
-
                         </tr>
                     @endforeach
                 </tbody>
@@ -213,7 +168,7 @@
         </div>
 
 
-        {{-- MOBILE CARD --}}
+        {{-- MOBILE --}}
         <div class="sm:hidden space-y-4">
 
             @foreach ($historiPenjualan as $item)
@@ -236,16 +191,6 @@
                     <p class="mt-2 text-green-700 font-bold">
                         Total: Rp {{ number_format($item->total_bill, 0, ',', '.') }}
                     </p>
-
-                    <div class="mt-3">
-                        <b>Foto Sisa:</b><br>
-                        @if($item->foto_sisa)
-                            <img src="{{ asset('storage/'.$item->foto_sisa) }}"
-                                 class="w-28 h-28 rounded-lg object-cover mt-2 shadow">
-                        @else
-                            <span class="text-gray-400">Tidak ada foto</span>
-                        @endif
-                    </div>
 
                 </div>
 
